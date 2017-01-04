@@ -1,4 +1,4 @@
-FROM php:7.0.10-fpm
+FROM php:7.1-fpm
 
 # -----------------------------------------------------------------------------
 # SET CORRECT TIMEZONE
@@ -37,24 +37,24 @@ RUN \
     && docker-php-ext-install xml
 
 RUN curl -Lo /tmp/xdebug-2.4.0.tgz http://xdebug.org/files/xdebug-2.4.0.tgz \
-&& tar -xvzf /tmp/xdebug-2.4.0.tgz -C /tmp \
-&& cd /tmp/xdebug-2.4.0 \
-&& phpize \
-&& ./configure \
-&& make \
-&& cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012
+    && tar -xvzf /tmp/xdebug-2.4.0.tgz -C /tmp \
+    && cd /tmp/xdebug-2.4.0 \
+    && phpize \
+    && ./configure \
+    && make \
+    && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012
 
 # -----------------------------------------------------------------------------
 # NEWRELIC INSTALLATION
 # -----------------------------------------------------------------------------
 
 RUN mkdir /usr/local/lib/newrelic/ \
-&& cd /usr/local/lib/newrelic/ \
-&& wget -r -nd --no-parent -Alinux.tar.gz http://download.newrelic.com/php_agent/release/ >/dev/null 2>&1 \
-&& export NR_INSTALL_SILENT=true \
-&& mv newrelic-php5-* newrelic-php5-linux.tar.gz \
-&& tar -xzvf newrelic-php5-linux.tar.gz --strip=1 \
-&& ./newrelic-install install
+    && cd /usr/local/lib/newrelic/ \
+    && wget -r -nd --no-parent -Alinux.tar.gz http://download.newrelic.com/php_agent/release/ >/dev/null 2>&1 \
+    && export NR_INSTALL_SILENT=true \
+    && mv newrelic-php5-* newrelic-php5-linux.tar.gz \
+    && tar -xzvf newrelic-php5-linux.tar.gz --strip=1 \
+    && ./newrelic-install install
 
 # -----------------------------------------------------------------------------
 # COPY CRON
