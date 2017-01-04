@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+    nginx:
+        container_name: TmcNginx
+        build:
+            context: .
+            dockerfile: nginx/Dockerfile
+        ports:
+            - "8080:80"
+            - "444:443"
+        volumes_from:
+            - appdata
+        environment:
+            VIRTUAL_HOST: "tmc-app.local"
+
+    php-fpm:
+        container_name: TmcPHP
+        build:
+            context: .
+            dockerfile: php/Dockerfile
+        volumes_from:
+            - appdata
+        # volumes:
+            # - ~/.ssh:/root/.ssh
+    appdata:
+        container_name: TmcApp
+        build:
+            context: .
+            dockerfile: appdata/Dockerfile
+        volumes:
+            - /var/www/html
+            # - ./web:/var/www/html
+    mysql:
+        container_name: TmcMysql
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpw'
+            MYSQL_USER: 'admin'
+            MYSQL_PASSWORD: 'worldstores'
+            MYSQL_DATABASE: 'fleetcapacity'
+        ports:
+        - "3307:3306"
+
+    redis:
+        container_name: TmcRedis
+        image: redis:3.2.0
+        ports:
+        - "6380:6379"
+
+    #beanstalkd:
+    #    container_name: TmcBeanstalkd
+    #    build:
+    #        context: .
+    #        dockerfile: beanstalkd/Dockerfile
