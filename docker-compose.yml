@@ -2,7 +2,7 @@ version: '2'
 
 services:
     nginx:
-        container_name: TmcNginx
+        container_name: TmsNginx
         build:
             context: .
             dockerfile: nginx/Dockerfile
@@ -11,28 +11,47 @@ services:
             - "444:443"
         volumes_from:
             - appdata
+            - cachedata
         environment:
-            VIRTUAL_HOST: "tmc-app.local"
+            VIRTUAL_HOST: "tms-app.local"
+            NGINX_CONF: "dev"
+        depends_on:
+            - php-fpm
+        links:
+            - "php-fpm:TmsPHP"
 
     php-fpm:
-        container_name: TmcPHP
+        container_name: TmsPHP
         build:
             context: .
             dockerfile: php/Dockerfile
         volumes_from:
             - appdata
-        # volumes:
-            # - ~/.ssh:/root/.ssh
+            - cachedata
+        depends_on:
+          - mysql
+          - beanstalkd
+          - appdata
+        links:
+            - "mysql:TmsMysql"
+            - "beanstalkd:TmsBeanstalkd"
+
     appdata:
-        container_name: TmcApp
+        container_name: TmsApp
         build:
             context: .
             dockerfile: appdata/Dockerfile
         volumes:
             - /var/www/html
-            # - ./web:/var/www/html
+
+    cachedata:
+        container_name: TmsCacheData
+        build:
+            context: .
+            dockerfile: cachedata/Dockerfile
+
     mysql:
-        container_name: TmcMysql
+        container_name: TmsMysql
         image: mysql:5.7
         environment:
             MYSQL_ROOT_PASSWORD: 'rootpw'
@@ -40,16 +59,24 @@ services:
             MYSQL_PASSWORD: 'worldstores'
             MYSQL_DATABASE: 'fleetcapacity'
         ports:
-        - "3307:3306"
+            - "3307:3306"
 
     redis:
-        container_name: TmcRedis
+        container_name: TmsRedis
         image: redis:3.2.0
         ports:
-        - "6380:6379"
+            - "6380:6379"
 
-    #beanstalkd:
-    #    container_name: TmcBeanstalkd
-    #    build:
-    #        context: .
-    #        dockerfile: beanstalkd/Dockerfile
+    beanstalkd:
+        container_name: TmsBeanstalkd
+        image: schickling/beanstalkd
+        ports:
+            - "11300:11300"
+
+    beanstalkd-console:
+        container_name: TmsBeanstalkdConsole
+        image: agaveapi/beanstalkd-console
+        links:
+            - "beanstalkd:TmsBeanstalkd"
+        ports:
+            - "8088:80"
