@@ -26,4 +26,7 @@ salaries
 
 
 https://www.youtube.com/watch?v=h00j5kbXVkM
+
 https://www.youtube.com/watch?v=g85b0S0hQ_w
+
+https://www.youtube.com/watch?v=ApfVtIa_gfE
