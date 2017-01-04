@@ -1,1 +1,1 @@
-TMS
+<?php echo phpinfo();
