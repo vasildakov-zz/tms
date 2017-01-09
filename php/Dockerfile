@@ -1,5 +1,7 @@
 FROM php:7.1-fpm
 
+COPY php/config/php/php.ini /usr/local/etc/php/
+
 # -----------------------------------------------------------------------------
 # SET CORRECT TIMEZONE
 # -----------------------------------------------------------------------------
@@ -43,6 +45,8 @@ RUN curl -Lo /tmp/xdebug-2.4.0.tgz http://xdebug.org/files/xdebug-2.4.0.tgz \
     && ./configure \
     && make \
     && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012
+
+COPY php/config/php/xdebug.ini /usr/local/etc/php/conf.d/
 
 # -----------------------------------------------------------------------------
 # NEWRELIC INSTALLATION

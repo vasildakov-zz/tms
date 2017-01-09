@@ -42,7 +42,7 @@ services:
             context: .
             dockerfile: appdata/Dockerfile
         volumes:
-            - /var/www/html
+            - ./appcode:/var/www/html
 
     cachedata:
         container_name: TmsCacheData
@@ -54,10 +54,10 @@ services:
         container_name: TmsMysql
         image: mysql:5.7
         environment:
-            MYSQL_ROOT_PASSWORD: 'rootpw'
-            MYSQL_USER: 'admin'
-            MYSQL_PASSWORD: 'worldstores'
-            MYSQL_DATABASE: 'fleetcapacity'
+            MYSQL_ROOT_PASSWORD: '1'
+            MYSQL_USER: 'root'
+            MYSQL_PASSWORD: '1'
+            MYSQL_DATABASE: 'tms'
         ports:
             - "3307:3306"
 
