@@ -13,7 +13,7 @@ services:
             - appdata
             - cachedata
         environment:
-            VIRTUAL_HOST: "tms-app.local"
+            VIRTUAL_HOST: "tms.dev"
             NGINX_CONF: "dev"
         depends_on:
             - php-fpm
@@ -30,11 +30,11 @@ services:
             - cachedata
         depends_on:
           - mysql
-          - beanstalkd
+          #- beanstalkd
           - appdata
         links:
             - "mysql:TmsMysql"
-            - "beanstalkd:TmsBeanstalkd"
+            #- "beanstalkd:TmsBeanstalkd"
 
     appdata:
         container_name: TmsApp
@@ -61,22 +61,22 @@ services:
         ports:
             - "3307:3306"
 
-    redis:
-        container_name: TmsRedis
-        image: redis:3.2.0
-        ports:
-            - "6380:6379"
+    # redis:
+    #     container_name: TmsRedis
+    #     image: redis:3.2.0
+    #     ports:
+    #         - "6380:6379"
 
-    beanstalkd:
-        container_name: TmsBeanstalkd
-        image: schickling/beanstalkd
-        ports:
-            - "11300:11300"
+    # beanstalkd:
+    #     container_name: TmsBeanstalkd
+    #     image: schickling/beanstalkd
+    #     ports:
+    #         - "11300:11300"
 
-    beanstalkd-console:
-        container_name: TmsBeanstalkdConsole
-        image: agaveapi/beanstalkd-console
-        links:
-            - "beanstalkd:TmsBeanstalkd"
-        ports:
-            - "8088:80"
+    # beanstalkd-console:
+    #     container_name: TmsBeanstalkdConsole
+    #     image: agaveapi/beanstalkd-console
+    #     links:
+    #         - "beanstalkd:TmsBeanstalkd"
+    #     ports:
+    #         - "8088:80"
