@@ -3,5 +3,5 @@
 return [
     'debug' => true,
 
-    'config_cache_enabled' => true,
+    'config_cache_enabled' => false,
 ];
