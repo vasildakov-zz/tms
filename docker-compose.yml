@@ -19,6 +19,8 @@ services:
             - php-fpm
         links:
             - "php-fpm:TmsPHP"
+        networks:
+            - TmsNet
 
     php-fpm:
         container_name: TmsPHP
@@ -35,6 +37,8 @@ services:
         links:
             - "mysql:TmsMysql"
             #- "beanstalkd:TmsBeanstalkd"
+        networks:
+            - TmsNet
 
     appdata:
         container_name: TmsApp
@@ -43,12 +47,16 @@ services:
             dockerfile: appdata/Dockerfile
         volumes:
             - ./appcode:/var/www/html
+        networks:
+            - TmsNet
 
     cachedata:
         container_name: TmsCacheData
         build:
             context: .
             dockerfile: cachedata/Dockerfile
+        networks:
+            - TmsNet
 
     mysql:
         container_name: TmsMysql
@@ -60,6 +68,8 @@ services:
             MYSQL_DATABASE: 'tms'
         ports:
             - "3307:3306"
+        networks:
+            - TmsNet
 
     # redis:
     #     container_name: TmsRedis
@@ -80,3 +90,11 @@ services:
     #         - "beanstalkd:TmsBeanstalkd"
     #     ports:
     #         - "8088:80"
+
+networks:
+    TmsNet:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 10.10.10.0/24
+              gateway: 10.10.10.1
