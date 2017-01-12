@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y nano
 # Change the UID of nginx for OSX writing permission problem
 RUN usermod -u 1000 nginx
 
+# Expose ports
+EXPOSE 80
+
 # -----------------------------------------------------------------------------
 # DEFAULT ENVIRONMENT VARIABLES
 # -----------------------------------------------------------------------------
