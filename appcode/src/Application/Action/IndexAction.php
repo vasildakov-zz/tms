@@ -1,6 +1,6 @@
 <?php // src/App/Action/IndexAction.php
 
-namespace App\Action;
+namespace Application\Action;
 
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;
@@ -22,8 +22,8 @@ class IndexAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        $userRepository = $this->em->getRepository('App\Domain\User\User');
-        $users = $userRepository->findAll();
+        #$userRepository = $this->em->getRepository('Application\Domain\User\User');
+        #$users = $userRepository->findAll();
 
         return new HtmlResponse($this->template->render('app::index'));
     }
