@@ -13,6 +13,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN \
     apt-get update && \
     apt-get install -y \
+        nano \
         libldap2-dev \
         zlib1g-dev \
         libicu-dev \
@@ -38,32 +39,41 @@ RUN \
     && docker-php-ext-install zip \
     && docker-php-ext-install xml
 
-RUN curl -Lo /tmp/xdebug-2.4.0.tgz http://xdebug.org/files/xdebug-2.4.0.tgz \
-    && tar -xvzf /tmp/xdebug-2.4.0.tgz -C /tmp \
-    && cd /tmp/xdebug-2.4.0 \
-    && phpize \
-    && ./configure \
-    && make \
-    && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012
+# -----------------------------------------------------------------------------
+# XDEBUG INSTALLATION
+# -----------------------------------------------------------------------------
+# RUN curl -Lo /tmp/xdebug-2.4.0.tgz http://xdebug.org/files/xdebug-2.4.0.tgz \
+# && tar -xvzf /tmp/xdebug-2.4.0.tgz -C /tmp \
+# && cd /tmp/xdebug-2.4.0 \
+# && phpize \
+# && ./configure \
+# && make \
+# && cp modules/xdebug.so /usr/local/lib/php/extensions/no-debug-non-zts-20151012
 
-COPY php/config/php/xdebug.ini /usr/local/etc/php/conf.d/
+# COPY php/config/php/xdebug.ini /usr/local/etc/php/conf.d/
+
+# Enable and configure xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 
 # -----------------------------------------------------------------------------
 # NEWRELIC INSTALLATION
 # -----------------------------------------------------------------------------
 
-RUN mkdir /usr/local/lib/newrelic/ \
-    && cd /usr/local/lib/newrelic/ \
-    && wget -r -nd --no-parent -Alinux.tar.gz http://download.newrelic.com/php_agent/release/ >/dev/null 2>&1 \
-    && export NR_INSTALL_SILENT=true \
-    && mv newrelic-php5-* newrelic-php5-linux.tar.gz \
-    && tar -xzvf newrelic-php5-linux.tar.gz --strip=1 \
-    && ./newrelic-install install
+# RUN mkdir /usr/local/lib/newrelic/ \
+#     && cd /usr/local/lib/newrelic/ \
+#     && wget -r -nd --no-parent -Alinux.tar.gz http://download.newrelic.com/php_agent/release/ >/dev/null 2>&1 \
+#     && export NR_INSTALL_SILENT=true \
+#     && mv newrelic-php5-* newrelic-php5-linux.tar.gz \
+#     && tar -xzvf newrelic-php5-linux.tar.gz --strip=1 \
+#     && ./newrelic-install install
+
 
 # -----------------------------------------------------------------------------
 # COPY CRON
 # -----------------------------------------------------------------------------
 COPY php/config/crontab/crontab /etc/
+
 
 # -----------------------------------------------------------------------------
 # COPY SUPERVISOR CONF
@@ -74,21 +84,21 @@ COPY php/config/supervisord/conf.d /etc/supervisor/conf.d/
 # -----------------------------------------------------------------------------
 # DEFAULT ENVIRONMENT VARIABLES
 # -----------------------------------------------------------------------------
-ENV DB_INIT false
-ENV PHP_INI dev
-ENV ENABLE_XDEBUG false
-ENV APP_ENV dev
+ENV DB_INIT       false
+ENV PHP_INI       dev
+ENV ENABLE_XDEBUG true
+ENV APP_ENV       dev
 
 # -----------------------------------------------------------------------------
 # PHP ini and pool configurations
 # -----------------------------------------------------------------------------
-COPY php/config/php /usr/local/etc/php/config
+COPY php/config/php  /usr/local/etc/php/config
 COPY php/config/pool /usr/local/etc/php-fpm.d
 
 # -----------------------------------------------------------------------------
 # Copy Run entry script
 # -----------------------------------------------------------------------------
-COPY php/run.sh /
-RUN chmod 755 /run.sh
+COPY php/run.sh /usr/local/bin/
+RUN chmod 755 /usr/local/bin/run.sh
 
-CMD ["/run.sh"]
+CMD ["/usr/local/bin/run.sh"]
