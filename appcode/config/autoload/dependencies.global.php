@@ -17,10 +17,11 @@ return [
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
-            Application::class                 => ApplicationFactory::class,
-            Helper\UrlHelper::class            => Helper\UrlHelperFactory::class,
+            Application::class                   => ApplicationFactory::class,
+            Helper\UrlHelper::class              => Helper\UrlHelperFactory::class,
             //Doctrine\Common\Cache\Cache::class => App\Container\DoctrineRedisCacheFactory::class,
             //Doctrine\ORM\EntityManager::class  => App\Container\DoctrineFactory::class,
+            'doctrine.entity_manager.orm_default'=> \ContainerInteropDoctrine\EntityManagerFactory::class,
         ],
     ],
 ];

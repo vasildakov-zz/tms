@@ -9,6 +9,11 @@ require 'vendor/autoload.php';
 $container = require 'config/container.php';
 
 /** @var \Doctrine\ORM\EntityManager $em */
-$em = $container->get(EntityManager::class);
+// $em = $container->get(EntityManager::class);
+// return ConsoleRunner::createHelperSet($em);
 
-return ConsoleRunner::createHelperSet($em);
+return new \Symfony\Component\Console\Helper\HelperSet([
+    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper(
+        $container->get('doctrine.entity_manager.orm_default')
+    ),
+]);
