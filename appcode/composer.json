@@ -38,7 +38,11 @@
         "pda/pheanstalk": "^3.1",
         "jms/serializer": "^1.3",
         "league/tactician": "^1.0",
-        "league/tactician-container": "^1.0"
+        "league/tactician-container": "^1.0",
+        "league/route": "^2.0",
+        "league/event": "^2.1",
+        "league/pipeline": "^0.3.0",
+        "dasprid/container-interop-doctrine": "^0.2.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7|^5.0",
@@ -50,12 +54,19 @@
     "autoload": {
         "psr-4": {
             "Tms\\": "src/",
-            "App\\": "src/App"
+            "Application\\": "src/Application",
+            "Domain\\": "src/Domain",
+            "Infrastructure\\": "src/Infrastructure",
+            "Presentation\\": "src/Presentation"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TmsTest\\": "tests/"
+            "TmsTest\\": "tests/",
+            "ApplicationTest\\": "tests/ApplicationTest",
+            "DomainTest\\": "tests/DomainTest",
+            "InfrastructureTest\\": "tests/InfrastructureTest",
+            "PresentationTest\\": "tests/PresentationTest"
         }
     }
 }
