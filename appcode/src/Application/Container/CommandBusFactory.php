@@ -9,9 +9,8 @@ use League\Tactician\Container\ContainerLocator;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\InvokeInflector;
 
-
-use Application\Command\Ping as PingCommand;
-use Application\CommandHandler\Ping as PingCommandHandler;
+use Application\Ping\PingCommand;
+use Application\Ping\PingHandler;
 
 class CommandBusFactory
 {
@@ -23,8 +22,12 @@ class CommandBusFactory
     {
         $inflector = new InvokeInflector();
 
+        /**
+         * @todo Move command mapping in configuration file
+         * @example  $container->get('config')['commands']
+         */
         $commandsMapping = [
-            PingCommand::class => PingCommandHandler::class
+            PingCommand::class => PingHandler::class,
         ];
 
         $locator = new ContainerLocator($container, $commandsMapping);
