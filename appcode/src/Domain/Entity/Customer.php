@@ -13,15 +13,27 @@ namespace Domain\Entity;
 
 class Customer
 {
+    private $id;
+
     private $username;
 
     private $email;
 
-    public function __construct($username, $email)
-    {
-        $this->setUsername($username);
+    private $createdAt;
 
+    public function __construct($id, $username, $email)
+    {
+        $this->setId($id);
+        $this->setUsername($username);
         $this->setEmail($email);
+        $this->setCreatedAt(new \DateTimeImmutable('now'));
+    }
+
+    private function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     private function setUsername($username)
@@ -34,6 +46,13 @@ class Customer
     private function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    private function setCreatedAt(\DateTimeImmutable $datetime)
+    {
+        $this->datetime = $datetime;
 
         return $this;
     }
