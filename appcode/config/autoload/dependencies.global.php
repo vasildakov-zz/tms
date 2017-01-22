@@ -1,27 +1,27 @@
 <?php
-use Zend\Expressive\Application;
-use Zend\Expressive\Container\ApplicationFactory;
+#use Zend\Expressive\Application;
+#use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
+use League\Tactician\CommandBus;
 
 return [
-    // Provides application-wide services.
-    // We recommend using fully-qualified class names whenever possible as
-    // service names.
     'dependencies' => [
-        // Use 'invokables' for constructor-less services, or services that do
-        // not require arguments to the constructor. Map a service name to the
-        // class name.
         'invokables' => [
-            // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
-            Helper\ServerUrlHelper::class => Helper\ServerUrlHelper::class,
+            Helper\ServerUrlHelper::class          => Helper\ServerUrlHelper::class,
         ],
-        // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
-            Application::class                   => ApplicationFactory::class,
-            Helper\UrlHelper::class              => Helper\UrlHelperFactory::class,
-            //Doctrine\Common\Cache\Cache::class => App\Container\DoctrineRedisCacheFactory::class,
-            //Doctrine\ORM\EntityManager::class  => App\Container\DoctrineFactory::class,
-            'doctrine.entity_manager.orm_default'=> \ContainerInteropDoctrine\EntityManagerFactory::class,
+            Zend\Expressive\Application::class     => Zend\Expressive\Container\ApplicationFactory::class,
+            Helper\UrlHelper::class                => Helper\UrlHelperFactory::class,
+            //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
+            //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
+            'doctrine.entity_manager.orm_default'  => ContainerInteropDoctrine\EntityManagerFactory::class,
+            //'doctrine.entity_manager.orm_saas'   => \Infrastructure\Database\Connection\Doctrine\EntityManagerFactory::class,
+
+            // Command Bus
+            League\Tactician\CommandBus::class     => Application\Container\CommandBusFactory::class,
+
+            // Handlers
+            Application\Ping\PingHandler::class    => Application\Ping\PingHandlerFactory::class,
         ],
     ],
 ];
