@@ -67,7 +67,7 @@ services:
             MYSQL_PASSWORD: '1'
             MYSQL_DATABASE: 'tms'
         ports:
-            - "3307:3306"
+            - "3306:3307"
         networks:
             - TmsNet
 
