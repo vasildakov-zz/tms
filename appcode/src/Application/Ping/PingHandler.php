@@ -13,17 +13,34 @@ use Psr\Log\LoggerInterface;
 final class PingHandler
 {
     /**
-     * @var LoggerInterface
+     * @var Psr\Log\LoggerInterface
      */
     private $logger;
 
 
     /**
-     * @param LoggerInterface $logger
+     * @param Psr\Log\LoggerInterface $logger
      */
     //public function __construct(LoggerInterface $logger)
-    public function __construct()
+    public function __construct($em)
     {
+        $this->em = $em;
+
+        try {
+            $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+            $classes = array(
+                $em->getClassMetadata(\Domain\Entity\Customer::class),
+            );
+
+            // $tool->dropSchema($classes);
+
+            $tool->createSchema($classes);
+
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+        }
+
+        exit();
         //$this->logger = $logger;
     }
 

@@ -19,6 +19,9 @@ class PingHandlerFactory
     {
         //$logger = $container->get(\Zend\Log\Logger::class);
         //return new Ping($logger);
-        return new PingHandler();
+        
+        $em = $container->get('doctrine.entity_manager.orm_default');
+        
+        return new PingHandler($em);
     }
 }

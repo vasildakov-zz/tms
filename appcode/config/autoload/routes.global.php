@@ -7,6 +7,7 @@ return [
         ],
         'factories' => [
             Application\Action\HomePageAction::class => Application\Action\HomePageFactory::class,
+            
             Presentation\Ui\Action\Ping::class       => Presentation\Ui\Action\PingFactory::class,
             Presentation\Ui\Action\Dashboard::class  => Presentation\Ui\Action\DashboardFactory::class,
         ],
