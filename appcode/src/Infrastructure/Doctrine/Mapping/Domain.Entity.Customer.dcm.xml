@@ -6,7 +6,8 @@
     xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                         http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <entity name="Domain\Entity\Customer" table="customer" schema="tms">
+    <!--entity name="Domain\Entity\Customer" table="customer" schema="tms"-->
+    <entity name="Domain\Entity\Customer" table="customer">
 
         <!-- definition here -->
         <indexes>
