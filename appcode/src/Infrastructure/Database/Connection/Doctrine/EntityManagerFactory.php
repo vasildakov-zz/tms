@@ -34,34 +34,36 @@ class EntityManagerFactory
         $underscoreNamingStrategy = false;
 
         // Doctrine ORM
-        $doctrine = new Configuration();
-        $doctrine->setProxyDir($proxyDir);
-        $doctrine->setProxyNamespace($proxyNamespace);
-        $doctrine->setAutoGenerateProxyClasses($autoGenerateProxyClasses);
+        $configuration = new Configuration();
+        $configuration->setProxyDir($proxyDir);
+        $configuration->setProxyNamespace($proxyNamespace);
+        $configuration->setAutoGenerateProxyClasses($autoGenerateProxyClasses);
 
         // Naming Strategy
         if ($underscoreNamingStrategy) {
-            $doctrine->setNamingStrategy(new UnderscoreNamingStrategy());
+            $configuration->setNamingStrategy(new UnderscoreNamingStrategy());
         }
 
         // ORM mapping by Annotation
         //AnnotationRegistry::registerAutoloadNamespace($config['driver']['annotations']['class']);
-        AnnotationRegistry::registerFile('vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
-        
+        AnnotationRegistry::registerFile(
+            'vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+        );
+
         $driver = new AnnotationDriver(
             new AnnotationReader(),
             $config['driver']['annotations']['paths']
         );
 
-        $doctrine->setMetadataDriverImpl($driver);
+        $configuration->setMetadataDriverImpl($driver);
 
         // Cache
         // $cache = $container->get(\Doctrine\Common\Cache\Cache::class);
-        // $doctrine->setQueryCacheImpl($cache);
-        // $doctrine->setResultCacheImpl($cache);
-        // $doctrine->setMetadataCacheImpl($cache);
+        // $configuration->setQueryCacheImpl($cache);
+        // $configuration->setResultCacheImpl($cache);
+        // $configuration->setMetadataCacheImpl($cache);
 
         // EntityManager
-        return EntityManager::create($config['connection']['orm_default']['params'], $doctrine);
+        return EntityManager::create($config['connection']['orm_default']['params'], $configuration);
     }
 }
