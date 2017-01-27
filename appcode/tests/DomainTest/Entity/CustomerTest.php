@@ -12,7 +12,7 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
      */
     public function itCanBeConstructed()
     {
-        $customer = new Customer('acme', 'acme@gmail.com');
+        $customer = new Customer('id', 'company', 'contact@company.com');
 
         self::assertInstanceOf(Customer::class, $customer);
     }
