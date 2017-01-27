@@ -43,7 +43,9 @@
         "league/event": "^2.1",
         "league/pipeline": "^0.3.0",
         "dasprid/container-interop-doctrine": "^0.2.2",
-        "container-interop/container-interop": "^1.1"
+        "container-interop/container-interop": "^1.1",
+        "beberlei/assert": "^2.7",
+        "zendframework/zend-db": "^2.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7|^5.0",
