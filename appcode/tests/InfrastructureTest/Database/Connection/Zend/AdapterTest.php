@@ -13,7 +13,8 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testAbc() {
+    public function testZendAdapter()
+    {
         $adapter = new \Zend\Db\Adapter\Adapter([
             'driver'   => 'Pdo_Mysql',
             'hostname' => 'mysql',
