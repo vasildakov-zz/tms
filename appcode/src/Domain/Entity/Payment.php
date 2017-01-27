@@ -11,41 +11,21 @@
 
 namespace Domain\Entity;
 
-class Customer
+class Payment
 {
     private $id;
 
-    private $username;
-
-    private $email;
-
     private $createdAt;
 
-    public function __construct($id, $username, $email)
+    public function __construct($id)
     {
         $this->setId($id);
-        $this->setUsername($username);
-        $this->setEmail($email);
         $this->setCreatedAt(new \DateTimeImmutable('now'));
     }
 
     private function setId($id)
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    private function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    private function setEmail($email)
-    {
-        $this->email = $email;
 
         return $this;
     }
