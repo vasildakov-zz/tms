@@ -12,9 +12,10 @@ return [
         'factories' => [
             Zend\Expressive\Application::class     => Zend\Expressive\Container\ApplicationFactory::class,
             Helper\UrlHelper::class                => Helper\UrlHelperFactory::class,
-            //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
-            //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
+
+            // Doctrine Entity Manager
             'doctrine.entity_manager.orm_default'  => ContainerInteropDoctrine\EntityManagerFactory::class,
+
             //'doctrine.entity_manager.orm_saas'   => \Infrastructure\Database\Connection\Doctrine\EntityManagerFactory::class,
 
             // Command Bus
@@ -22,6 +23,12 @@ return [
 
             // Handlers
             Application\Ping\PingHandler::class    => Application\Ping\PingHandlerFactory::class,
+
+            // Infrastructure
+            \Doctrine\ORM\Tools\SchemaValidator::class => \Infrastructure\Doctrine\Tools\SchemaValidatorFactory::class,
+            \Doctrine\ORM\Tools\SchemaTool::class => \Infrastructure\Doctrine\Tools\SchemaToolFactory::class,
+            //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
+            //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
         ],
     ],
 ];
