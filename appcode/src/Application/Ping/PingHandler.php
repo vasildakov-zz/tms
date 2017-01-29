@@ -29,27 +29,9 @@ final class PingHandler
     /**
      * @param Psr\Log\LoggerInterface $logger
      */
-    //public function __construct(LoggerInterface $logger)
-    public function __construct($em)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->em = $em;
-
-        try {
-            $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-            $classes = array(
-                $em->getClassMetadata(\Domain\Entity\Customer::class),
-            );
-
-            // $tool->dropSchema($classes);
-
-            $tool->createSchema($classes);
-
-        } catch (\Exception $e) {
-            var_dump($e->getMessage());
-        }
-
-        exit();
-        //$this->logger = $logger;
+        $this->logger = $logger;
     }
 
 
@@ -58,9 +40,9 @@ final class PingHandler
      */
     public function __invoke(PingCommand $command)
     {
+
         $time = $command->time();
 
-        // $this->logger->info(sprintf('Ping time %s', $time));
-        // return new PingResponse($time);
+        $this->logger->info(sprintf('Ping time %s', $time));
     }
 }

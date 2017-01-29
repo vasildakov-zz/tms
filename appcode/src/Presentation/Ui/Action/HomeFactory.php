@@ -9,16 +9,17 @@
  * @link https://github.com/vasildakov/tms GitHub
  */
 
-namespace Application\Ping;
+namespace Presentation\Ui\Action;
 
 use Interop\Container\ContainerInterface;
+use League\Tactician\CommandBus;
 
 /**
- * Class PingHandlerFactory
+ * Class HomeFactory
  *
  * @author Vasil Dakov <vasildakov@gmail.com>
  */
-class PingHandlerFactory
+class HomeFactory
 {
     /**
      * @param  ContainerInterface $container
@@ -26,9 +27,15 @@ class PingHandlerFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        //$logger = $container->get(\Zend\Log\Logger::class);
-        $logger = $container->get(\Monolog\Logger::class);
+        // $driverManager = Doctrine\DBAL\DriverManager
 
-        return new PingHandler($logger);
+
+        if (!$container->has(CommandBus::class)) {
+            throw new \Exception("CommandBus is not configured");
+        }
+
+        $bus = $container->get(CommandBus::class);
+
+        return new Home($bus);
     }
 }
