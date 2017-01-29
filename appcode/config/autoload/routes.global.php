@@ -6,8 +6,7 @@ return [
             Zend\Expressive\Router\RouterInterface::class => Zend\Expressive\Router\ZendRouter::class,
         ],
         'factories' => [
-            Application\Action\HomePageAction::class => Application\Action\HomePageFactory::class,
-            
+            Presentation\Ui\Action\Home::class => Presentation\Ui\Action\HomeFactory::class,
             Presentation\Ui\Action\Ping::class       => Presentation\Ui\Action\PingFactory::class,
             Presentation\Ui\Action\Dashboard::class  => Presentation\Ui\Action\DashboardFactory::class,
         ],
@@ -17,7 +16,7 @@ return [
         [
             'name' => 'home',
             'path' => '/',
-            'middleware' => Application\Action\HomePageAction::class,
+            'middleware' => Presentation\Ui\Action\Home::class,
             'allowed_methods' => ['GET'],
         ],
         [
@@ -31,6 +30,9 @@ return [
             'path' => '/dashboard',
             'middleware' => Presentation\Ui\Action\Dashboard::class,
             'allowed_methods' => ['GET'],
+            // 'middleware' => [
+            //     Presentation\Ui\Action\Connection::class,
+            // ]
         ],
     ],
 ];
