@@ -28,6 +28,10 @@
         "zendframework/zend-debug": "^2.5",
         "zendframework/zend-config": "^2.6",
         "zendframework/zend-http": "^2.5",
+        "zendframework/zend-log": "^2.9",
+        "zendframework/zend-db": "^2.8",
+        "zendframework/zend-session": "^2.7",
+        "zendframework/zend-crypt": "^3.2",
         "ocramius/proxy-manager": "^1.0 || ^2.0",
         "doctrine/orm": "^2.5",
         "doctrine/common": "^2.6",
@@ -45,9 +49,7 @@
         "dasprid/container-interop-doctrine": "^0.2.2",
         "container-interop/container-interop": "^1.1",
         "beberlei/assert": "^2.7",
-        "zendframework/zend-db": "^2.8",
-        "zendframework/zend-session": "^2.7",
-        "zendframework/zend-crypt": "^3.2"
+        "monolog/monolog": "^1.22"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7|^5.0",
@@ -58,7 +60,6 @@
     },
     "autoload": {
         "psr-4": {
-            "Tms\\": "src/",
             "Application\\": "src/Application",
             "Domain\\": "src/Domain",
             "Infrastructure\\": "src/Infrastructure",
@@ -67,7 +68,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TmsTest\\": "tests/",
             "ApplicationTest\\": "tests/ApplicationTest",
             "DomainTest\\": "tests/DomainTest",
             "InfrastructureTest\\": "tests/InfrastructureTest",
