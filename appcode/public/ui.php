@@ -4,6 +4,7 @@ use Zend\Stdlib\ArrayObject;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;
 
+use Zend\Expressive\Router\ZendRouter as ExpressiveRouter;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\ServiceManager;
 
@@ -19,6 +20,7 @@ if (php_sapi_name() === 'cli-server'
 
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
+
 
 /** @var \Zend\Expressive\ConfigManager\ConfigManager $configManager */
 $configManager = new ConfigManager([
