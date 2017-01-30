@@ -47,6 +47,7 @@ class Ping
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
         $command  = new PingCommand(new \DateTime);
+
         $this->bus->handle($command);
 
         return new JsonResponse(['time' => $command->time()], 200);

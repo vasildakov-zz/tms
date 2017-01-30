@@ -46,6 +46,9 @@ class Dashboard
 
         $subdomain = explode('.', $host)[0];
 
-        return new JsonResponse(['subdomain' => $subdomain]);
+        return new JsonResponse([
+            'class' => __CLASS__,
+            'subdomain' => $subdomain
+        ]);
     }
 }

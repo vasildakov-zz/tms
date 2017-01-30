@@ -60,6 +60,10 @@ class Home
         // $command  = new PingCommand(new \DateTime);
         // $this->bus->handle($command);
 
-        return new JsonResponse(['subdomain' => $subdomain], 200);
+        return new JsonResponse([
+            'class' => __CLASS__,
+            'method' => __METHOD__,
+            'subdomain' => $subdomain
+        ], 200);
     }
 }
