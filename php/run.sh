@@ -14,6 +14,10 @@ service cron start
 # Start supervisord and services
 /usr/bin/supervisord -c /etc/supervisord.conf
 
+
+mkdir /var/www/html/data/cache/
+mkdir /var/www/html/data/log/
+
 chmod -R 777 /var/www/html/data
 
 composer install --no-interaction --verbose
