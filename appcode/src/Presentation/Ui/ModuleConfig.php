@@ -24,7 +24,12 @@ class ModuleConfig
     {
         return [
             'dependencies' => [
+                'invokables' => [
+                    
+                ],
                 'factories' => [
+                    Ui\Middleware\Session::class => Ui\Middleware\SessionFactory::class,
+
                     Ui\Action\Home::class       => Ui\Action\HomeFactory::class,
                     Ui\Action\Ping::class       => Ui\Action\PingFactory::class,
                     Ui\Action\Dashboard::class  => Ui\Action\DashboardFactory::class,
@@ -51,11 +56,12 @@ class ModuleConfig
                 ],
             ],
             'middleware_pipeline' => [
-                // 'ui' => [
-                //     'path' => '/',
-                //     'middleware' => [],
-                //     'priority' => 100,
-                // ],
+                'before' => [
+                    'middleware' => [
+                        Ui\Middleware\Session::class,
+                    ],
+                    'priority' => 1,
+                ],
             ]
         ];
     }
