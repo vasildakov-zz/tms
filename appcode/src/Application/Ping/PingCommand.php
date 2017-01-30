@@ -18,6 +18,9 @@ namespace Application\Ping;
  */
 final class PingCommand
 {
+    /**
+     * @var string $time
+     */
     private $time;
 
     public function __construct()
