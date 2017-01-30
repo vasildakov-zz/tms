@@ -29,7 +29,6 @@ class HomeFactory
     {
         // $driverManager = Doctrine\DBAL\DriverManager
 
-
         if (!$container->has(CommandBus::class)) {
             throw new \Exception("CommandBus is not configured");
         }

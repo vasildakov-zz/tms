@@ -16,6 +16,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Zend\Diactoros\Response\JsonResponse;
 use League\Tactician\CommandBus;
 
+use Zend\Session\Container;
+
 /**
  * Class Home
  *
@@ -44,18 +46,21 @@ class Home
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
+        $container = new Container('namespace');
+        var_dump($container->offsetGet('customer'));
+
+        exit();
+
         // find client by subdomain
-        $subdomains = ['example', 'acme'];
+        // $subdomains = ['example', 'acme'];
 
 
-        $host = $request->getUri()->getHost();
-        $subdomain = explode('.', $host)[0];
+        // $host = $request->getUri()->getHost();
+        // $subdomain = explode('.', $host)[0];
 
-        if (!in_array($subdomain, $subdomains)) {
-            exit('invalid domain');
-        }
-
-
+        // if (!in_array($subdomain, $subdomains)) {
+        //     exit('invalid domain');
+        // }
 
         // $command  = new PingCommand(new \DateTime);
         // $this->bus->handle($command);
@@ -63,7 +68,7 @@ class Home
         return new JsonResponse([
             'class' => __CLASS__,
             'method' => __METHOD__,
-            'subdomain' => $subdomain
+            //'subdomain' => $subdomain
         ], 200);
     }
 }
