@@ -3,7 +3,7 @@
 return [
     'debug' => true,
 
-    'config_cache_enabled' => false,
+    'config_cache_enabled' => true,
 
     'databases' => [
         'idc'  => [

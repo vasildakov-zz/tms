@@ -29,7 +29,7 @@ return [
             \Doctrine\ORM\Tools\SchemaTool::class      => \Infrastructure\Doctrine\Tools\SchemaToolFactory::class,
             //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
             //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
-            
+
             \Doctrine\DBAL\Driver\Connection::class => \Infrastructure\Database\Connection\DBAL\ConnectionFactory::class,
 
             // Loggers

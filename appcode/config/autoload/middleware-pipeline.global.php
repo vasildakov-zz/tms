@@ -9,7 +9,6 @@ return [
             Helper\UrlHelperMiddleware::class => Helper\UrlHelperMiddlewareFactory::class,
         ],
     ],
-    // This can be used to seed pre- and/or post-routing middleware
     'middleware_pipeline' => [
         'always' => [
             'middleware' => [
@@ -26,11 +25,8 @@ return [
             ],
             'priority' => 1,
         ],
-
         'error' => [
-            'middleware' => [
-                // Add error middleware here.
-            ],
+            'middleware' => [],
             'error'    => true,
             'priority' => -10000,
         ],

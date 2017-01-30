@@ -11,10 +11,10 @@ return [
             'orm_default' => [
                 'class' => \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain::class,
                 'drivers' => [
-                    'Domain\Entity' => 'my_entity',
+                    'Domain\Entity' => __NAMESPACE__,
                 ],
             ],
-            'my_entity' => [
+            __NAMESPACE__ => [
                 'class' => \Doctrine\ORM\Mapping\Driver\XmlDriver::class,
                 'cache' => 'array',
                 'paths' => __DIR__ . '/../../src/Infrastructure/Doctrine/Mapping',

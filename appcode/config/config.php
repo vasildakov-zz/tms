@@ -1,35 +1,34 @@
 <?php
-
+/**
+ * SaaS Configuration used by ui.php
+ */
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;
+use Zend\Expressive\ConfigManager\ConfigManager;
+use Zend\Expressive\ConfigManager\PhpFileProvider;
 
-/**
- * Configuration files are loaded in a specific order. First ``global.php``, then ``*.global.php``.
- * then ``local.php`` and finally ``*.local.php``. This way local settings overwrite global settings.
- *
- * The configuration can be cached. This can be done by setting ``config_cache_enabled`` to ``true``.
- *
- * Obviously, if you use closures in your config you can't cache it.
- */
+$configManager = new ConfigManager([
+    Presentation\Ui\ModuleConfig::class,
+    new PhpFileProvider('config/autoload/{{,*.}global,{,*.}local}.php'),
+]);
 
-$cachedConfigFile = 'data/cache/app_config.php';
+return new ArrayObject($configManager->getMergedConfig());
 
-$config = [];
-if (is_file($cachedConfigFile)) {
-    // Try to load the cached config
-    $config = include $cachedConfigFile;
-} else {
-    // Load configuration from autoload path
-    foreach (Glob::glob('config/autoload/{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
-        $config = ArrayUtils::merge($config, include $file);
-    }
+// $cachedConfigFile = './data/cache/saas/app_config.php';
 
-    // Cache config if enabled
-    if (isset($config['config_cache_enabled']) && $config['config_cache_enabled'] === true) {
-        file_put_contents($cachedConfigFile, '<?php return ' . var_export($config, true) . ';');
-    }
-}
+// $config = [];
 
-// Return an ArrayObject so we can inject the config as a service in Aura.Di
-// and still use array checks like ``is_array``.
-return new ArrayObject($config, ArrayObject::ARRAY_AS_PROPS);
+// if (is_file($cachedConfigFile)) {
+//     $config = include $cachedConfigFile;
+// } else {
+//     foreach (Glob::glob('config/saas/autoload/{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
+//         $config = ArrayUtils::merge($config, include $file);
+//     }
+
+//     if (isset($config['config_cache_enabled']) && $config['config_cache_enabled'] === true) {
+//         file_put_contents($cachedConfigFile, '<?php return ' . var_export($config, true) . ';');
+//     }
+// }
+
+
+// return new ArrayObject($config, ArrayObject::ARRAY_AS_PROPS);

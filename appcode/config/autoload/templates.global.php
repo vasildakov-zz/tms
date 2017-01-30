@@ -13,7 +13,6 @@ return [
             Zend\Expressive\ZendView\HelperPluginManagerFactory::class,
         ],
     ],
-
     'templates' => [
         'layout' => 'layout/default',
         'map' => [
