@@ -56,7 +56,7 @@ final class CreateSession implements CreateSessionInterface
      */
     public function __invoke(CreateSessionCommand $command): void
     {
-        $this->session->unset('client');
+        $this->session->remove('client');
         // 1) get the subdomain: $command->subdomain();
 
         // 2) check if the client is exist: $repository->findOneBy($command->subdomain());
