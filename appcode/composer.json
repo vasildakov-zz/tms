@@ -51,14 +51,14 @@
         "beberlei/assert": "^2.7",
         "monolog/monolog": "^1.22",
         "mtymek/expressive-config-manager": "^0.4.0",
-        "zendframework/zend-router": "^3.0"
+        "zendframework/zend-router": "^3.0",
+        "filp/whoops": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.7|^5.0",
         "squizlabs/php_codesniffer": "~2.3",
         "satooshi/php-coveralls": "~1.0",
-        "phpunit/php-code-coverage": "^3.0|^4.0",
-        "filp/whoops": "^1.1 || ^2.0"
+        "phpunit/php-code-coverage": "^3.0|^4.0"
     },
     "autoload": {
         "psr-4": {
