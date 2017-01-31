@@ -27,8 +27,8 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $stmt   = $adapter->query('SHOW DATABASES');
         $result = $stmt->execute();
 
-        var_dump(
-            $result->getResource()->fetchAll()
-        );
+        // var_dump(
+        //     $result->getResource()->fetchAll()
+        // );
     }
 }
