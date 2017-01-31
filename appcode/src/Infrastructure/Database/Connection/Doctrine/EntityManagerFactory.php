@@ -11,15 +11,17 @@
 
 namespace Infrastructure\Database\Connection\Doctrine;
 
+use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
+
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\ArrayCache;
 
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
+
 use Interop\Container\ContainerInterface;
 
 class EntityManagerFactory
@@ -30,41 +32,27 @@ class EntityManagerFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $config = $container->has('config') ? $container->get('config') : [];
+        /**
+         * @todo Get doctrine configuration from the session storage
+         */
+        $doctrineConfig = $container->has('config') ? $container->get('config')['doctrine'] : [];
 
-        $config = $config['doctrine'];
 
-        $proxyDir = 'data/DoctrineORM/Proxy';
-
-        $proxyNamespace = 'DoctrineORM/Proxy';
-
-        $autoGenerateProxyClasses = true;
-
-        $underscoreNamingStrategy = false;
-
-        // Doctrine ORM
         $configuration = new Configuration();
-        $configuration->setProxyDir($proxyDir);
-        $configuration->setProxyNamespace($proxyNamespace);
-        $configuration->setAutoGenerateProxyClasses($autoGenerateProxyClasses);
+        $configuration->setAutoGenerateProxyClasses(true);
+        $configuration->setProxyDir('data/doctrine/proxies');
+        $configuration->setProxyNamespace('Domain\Entity');
 
-        // Naming Strategy
-        if ($underscoreNamingStrategy) {
-            $configuration->setNamingStrategy(new UnderscoreNamingStrategy());
-        }
-
-        // ORM mapping by Annotation
-        //AnnotationRegistry::registerAutoloadNamespace($config['driver']['annotations']['class']);
-        AnnotationRegistry::registerFile(
-            'vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+        $configuration->setMetadataDriverImpl(
+            new XmlDriver([
+                __DIR__ . '/../../Persistence/Doctrine/Mapping'
+            ])
         );
 
-        $driver = new AnnotationDriver(
-            new AnnotationReader(),
-            $config['driver']['annotations']['paths']
-        );
+        $configuration->setNamingStrategy(new UnderscoreNamingStrategy());
+        $configuration->setQueryCacheImpl(new ArrayCache());
+        $configuration->setMetadataCacheImpl(new ArrayCache());
 
-        $configuration->setMetadataDriverImpl($driver);
 
         // Cache
         // $cache = $container->get(\Doctrine\Common\Cache\Cache::class);
@@ -72,7 +60,28 @@ class EntityManagerFactory
         // $configuration->setResultCacheImpl($cache);
         // $configuration->setMetadataCacheImpl($cache);
 
-        // EntityManager
-        return EntityManager::create($config['connection']['orm_default']['params'], $configuration);
+        
+        // data from the session
+        $db = [
+            'driver'   => 'pdo_mysql',
+            'host'     => 'mysql',
+            'port'     => '3306',
+            'dbname'   => 'tms',
+            'user'     => 'root',
+            'password' => '1',
+            'charset'  => 'UTF8',
+        ];
+
+        $connection = DriverManager::getConnection($db);
+
+        $entityManager =  EntityManager::create($connection, $configuration);
+
+        // Add custom types to map ValueObjects correctly
+        // if (!\Doctrine\DBAL\Types\Type::hasType('isbn')) {
+        //      \Doctrine\DBAL\Types\Type::addType('isbn', IsbnType::class);
+        //     $entityManager->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('isbn', 'isbn');
+        // }
+
+        return $entityManager;
     }
 }
