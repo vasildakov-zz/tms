@@ -11,36 +11,65 @@
 
 namespace Application\Session;
 
+use Psr\Log\LoggerInterface;
+use Infrastructure\Session\SessionInterface;
+
 /**
- * CreateSession
+ * Class CreateSession
  *
- * Create session
+ * @author Vasil Dakov <vasildakov@gmail.com>
  */
 final class CreateSession implements CreateSessionInterface
 {
     /**
-     * @param Zend\Session\Container $session
-     * @param ClientRepository       $repository
+     * @var LoggerInterface
      */
-    public function __construct($session, $repository)
-    {
-        $this->session = $session;
-        $this->repository = $repository;
-    }
+    private $logger;
+
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
+     * @var RepositoryInterface
+     */
+    private $repository;
 
 
     /**
-     * @param  CreateSessionCommand $command
-     * @return boolean
+     * Constructor
+     *
+     * @param LoggerInterface       $logger
+     * @param SessionInterface      $session
+     * @param RepositoryInterface   $repository
      */
-    public function __invoke(CreateSessionCommand $command): bool
+    public function __construct(LoggerInterface $logger, SessionInterface $session)
     {
+        $this->logger  = $logger;
+        $this->session = $session;
+    }
+
+    /**
+     * @param  CreateSessionCommand $command
+     * @return void
+     */
+    public function __invoke(CreateSessionCommand $command): void
+    {
+        $this->session->unset('client');
         // 1) get the subdomain: $command->subdomain();
 
-        // 2) check if the client is exist: $repository->findOneBy();
+        // 2) check if the client is exist: $repository->findOneBy($command->subdomain());
 
-        // 3) check if the session is exist: $container->offsetGet('key');
+        // 3) check if the session is exist: $session->has('key');
+        if (!$this->session->has('client')) {
+             $this->session->set('client', $command->subdomain());
 
-        // 4) create a session if does not exist: $container->offsetSet('key', 'value');
+            $this->logger->info('new session has been created');
+        }
+
+        $this->logger->info('the session exists');
+
+        // var_dump($this->session->get('client')); exit();
     }
 }

@@ -13,5 +13,5 @@ namespace Application\Session;
 
 interface CreateSessionInterface
 {
-    public function __invoke(CreateSessionCommand $command): bool;
+    public function __invoke(CreateSessionCommand $command): void;
 }
