@@ -27,6 +27,10 @@ class HomeFactory
      */
     public function __invoke(ContainerInterface $container)
     {
+        $em = $container->get('doctrine.entity_manager.orm_secondary');
+        var_dump($em); exit();
+
+
         if (!$container->has(CommandBus::class)) {
             throw new \Exception("CommandBus is not configured");
         }
