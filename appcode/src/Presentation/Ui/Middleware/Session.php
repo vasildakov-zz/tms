@@ -16,24 +16,28 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\RequestInterface as Request;
 use League\Tactician\CommandBus;
 
-use Zend\Session\Config\StandardConfig;
-use Zend\Session\SessionManager;
-use Zend\Session\Container;
+use Application\Session\CreateSessionCommand;
 
 /**
- * Class Session
+ * Class Session Middleware
  *
  * @author Vasil Dakov <vasildakov@gmail.com>
  */
-class Session
+final class Session
 {
     /**
-     * @todo Use command bus, command and handler
-     * @param Zend\Session\Container $container
+     * @var League\Tactician\CommandBus $bus
      */
-    public function __construct(Container $container)
+    private $bus;
+
+    /**
+     * Constructor
+     *
+     * @param League\Tactician\CommandBus $bus
+     */
+    public function __construct(CommandBus $bus)
     {
-        $this->container = $container;
+        $this->bus = $bus;
     }
 
 
@@ -42,19 +46,9 @@ class Session
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
-        $host = $request->getUri()->getHost();
-
-        $subdomain = explode('.', $host)[0];
-
-        // 1) get the subdomain
-
-        // 2) check if the client is exist
-
-        // 3) check if the session is exist
-
-        // 4) create a session if does not exist
-
-        $this->container->offsetSet('customer', $subdomain);
+        $this->bus->handle(
+            CreateSessionCommand::fromRequest($request)
+        );
 
         return $next($request, $response);
     }

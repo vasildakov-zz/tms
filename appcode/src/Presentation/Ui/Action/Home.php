@@ -46,29 +46,6 @@ class Home
      */
     public function __invoke(Request $request, Response $response, callable $next = null)
     {
-        $container = new Container('namespace');
-        var_dump($container->offsetGet('customer'));
-
-        exit();
-
-        // find client by subdomain
-        // $subdomains = ['example', 'acme'];
-
-
-        // $host = $request->getUri()->getHost();
-        // $subdomain = explode('.', $host)[0];
-
-        // if (!in_array($subdomain, $subdomains)) {
-        //     exit('invalid domain');
-        // }
-
-        // $command  = new PingCommand(new \DateTime);
-        // $this->bus->handle($command);
-
-        return new JsonResponse([
-            'class' => __CLASS__,
-            'method' => __METHOD__,
-            //'subdomain' => $subdomain
-        ], 200);
+        return new JsonResponse(['class' => __CLASS__], 200);
     }
 }

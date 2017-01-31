@@ -28,14 +28,12 @@ class SessionFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        // if (!$container->has(CommandBus::class)) {
-        //     throw new \Exception("CommandBus is not configured");
-        // }
+        if (!$container->has(CommandBus::class)) {
+            throw new \Exception("CommandBus is not configured");
+        }
 
-        // $bus = $container->get(CommandBus::class);
+        $bus = $container->get(CommandBus::class);
 
-        $container = new Container('namespace');
-
-        return new Session($container);
+        return new Session($bus);
     }
 }

@@ -27,8 +27,6 @@ class HomeFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        // $driverManager = Doctrine\DBAL\DriverManager
-
         if (!$container->has(CommandBus::class)) {
             throw new \Exception("CommandBus is not configured");
         }
