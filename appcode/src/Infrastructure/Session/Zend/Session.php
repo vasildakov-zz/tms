@@ -50,7 +50,7 @@ class Session extends \Zend\Session\Container implements SessionInterface
     /**
      * {@inheritDoc}
      */
-    public function unset($key)
+    public function remove($key)
     {
         return self::offsetUnset($key);
     }
