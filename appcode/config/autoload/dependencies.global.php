@@ -23,10 +23,11 @@ return [
 
             // Handlers
             Application\Ping\PingHandler::class    => Application\Ping\PingHandlerFactory::class,
+            Application\Session\CreateSession::class    => Application\Session\CreateSessionFactory::class,
 
             // Infrastructure
             \Doctrine\ORM\Tools\SchemaValidator::class => \Infrastructure\Doctrine\Tools\SchemaValidatorFactory::class,
-            \Doctrine\ORM\Tools\SchemaTool::class      => \Infrastructure\Doctrine\Tools\SchemaToolFactory::class,
+            \Doctrine\ORM\Tools\SchemaTool::class => \Infrastructure\Doctrine\Tools\SchemaToolFactory::class,
             //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
             //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
 
@@ -35,6 +36,7 @@ return [
             // Loggers
             \Monolog\Logger::class  => \Infrastructure\Logger\Monolog\LoggerFactory::class,
             \Zend\Log\Logger::class => \Infrastructure\Logger\Zend\LoggerFactory::class,
+            \Infrastructure\Session\SessionInterface::class => \Infrastructure\Session\Zend\SessionFactory::class,
         ],
     ],
 ];
