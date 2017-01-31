@@ -13,10 +13,11 @@ return [
             Zend\Expressive\Application::class     => Zend\Expressive\Container\ApplicationFactory::class,
             Helper\UrlHelper::class                => Helper\UrlHelperFactory::class,
 
-            // Doctrine Entity Manager
-            'doctrine.entity_manager.orm_default'  => ContainerInteropDoctrine\EntityManagerFactory::class,
+            // Default Doctrine Entity Manager
+            'doctrine.entity_manager.orm_default' => ContainerInteropDoctrine\EntityManagerFactory::class,
 
-            //'doctrine.entity_manager.orm_saas'   => \Infrastructure\Database\Connection\Doctrine\EntityManagerFactory::class,
+            // Dynamic Doctrine Entity Manager
+            'doctrine.entity_manager.orm_secondary' => \Infrastructure\Database\Connection\Doctrine\EntityManagerFactory::class,
 
             // Command Bus
             League\Tactician\CommandBus::class     => Application\Container\CommandBusFactory::class,
