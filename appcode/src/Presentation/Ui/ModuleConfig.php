@@ -24,9 +24,7 @@ class ModuleConfig
     {
         return [
             'dependencies' => [
-                'invokables' => [
-                    
-                ],
+                'invokables' => [],
                 'factories' => [
                     Ui\Middleware\Session::class => Ui\Middleware\SessionFactory::class,
 
