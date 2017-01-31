@@ -22,6 +22,9 @@ use League\Tactician\Handler\MethodNameInflector\InvokeInflector;
 use Application\Ping\PingCommand;
 use Application\Ping\PingHandler;
 
+use Application\Session\CreateSessionCommand;
+use Application\Session\CreateSession;
+
 class CommandBusFactory
 {
     /**
@@ -38,6 +41,7 @@ class CommandBusFactory
          */
         $commandsMapping = [
             PingCommand::class => PingHandler::class,
+            CreateSessionCommand::class => CreateSession::class,
         ];
 
         $locator = new ContainerLocator($container, $commandsMapping);
