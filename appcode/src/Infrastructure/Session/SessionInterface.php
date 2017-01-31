@@ -37,5 +37,5 @@ interface SessionInterface
      * @param  string $key
      * @return void
      */
-    public function unset($key);
+    public function remove($key);
 }
