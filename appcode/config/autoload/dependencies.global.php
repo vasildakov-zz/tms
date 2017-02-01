@@ -26,9 +26,15 @@ return [
             Application\Ping\PingHandler::class    => Application\Ping\PingHandlerFactory::class,
             Application\Session\CreateSession::class    => Application\Session\CreateSessionFactory::class,
 
-            // Infrastructure
+            // Doctrine ORM Tools
             \Doctrine\ORM\Tools\SchemaValidator::class => \Infrastructure\Doctrine\Tools\SchemaValidatorFactory::class,
             \Doctrine\ORM\Tools\SchemaTool::class => \Infrastructure\Doctrine\Tools\SchemaToolFactory::class,
+
+            // Doctrine Data Fixtures
+            \Doctrine\Common\DataFixtures\Executor\ORMExecutor::class => \Infrastructure\Doctrine\Tools\ExecutorFactory::class,
+            \Doctrine\Common\DataFixtures\Loader::class => \Infrastructure\Doctrine\Tools\LoaderFactory::class,
+            \Doctrine\Common\DataFixtures\Purger\ORMPurger::class => \Infrastructure\Doctrine\Tools\PurgerFactory::class,
+
             //Doctrine\Common\Cache\Cache::class   => App\Container\DoctrineRedisCacheFactory::class,
             //Doctrine\ORM\EntityManager::class    => App\Container\DoctrineFactory::class,
 

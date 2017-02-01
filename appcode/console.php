@@ -110,11 +110,12 @@ if (class_exists(\Doctrine\DBAL\Migrations\Version::class)) {
 }
 
 // Custom Commands
-// if (isset($config['console']['commands'])) {
-//     foreach ($commands as $command) {
-//         $cli->add($container->get($command));
-//     }
-// }
+if (isset($config['console']['commands'])) {
+    $commands = $config['console']['commands'];
+    foreach ($commands as $command) {
+        $cli->add($container->get($command));
+    }
+}
 
 $helperSet = isset($helperSet) ? $helperSet : new \Symfony\Component\Console\Helper\HelperSet();
 foreach ($helpers as $name => $helper) {
