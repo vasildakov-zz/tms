@@ -14,6 +14,9 @@ namespace Infrastructure\Doctrine\Tools;
 use Interop\Container\ContainerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 
+/**
+ * Class SchemaToolFactory
+ */
 class SchemaToolFactory
 {
     /**
