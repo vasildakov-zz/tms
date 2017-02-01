@@ -36,7 +36,7 @@
         "doctrine/orm": "^2.5",
         "doctrine/common": "^2.6",
         "doctrine/migrations": "^1.5",
-        "doctrine/data-fixtures": "^1.1",
+        "doctrine/data-fixtures": "^1.2",
         "guzzlehttp/guzzle": "^6.2",
         "phpoffice/phpexcel": "^1.8",
         "pda/pheanstalk": "^3.1",
